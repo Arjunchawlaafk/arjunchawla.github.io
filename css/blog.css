@@ -1137,3 +1137,7 @@ fieldset {
   .footer .social li a:hover {
     color: #333;
   }
+
+  .blog-post-image-3 {
+    width: 90%;
+}

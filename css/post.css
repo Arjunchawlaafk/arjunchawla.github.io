@@ -1216,16 +1216,16 @@ footer {
 }
 
 .blog-post-title {
-    font-size: 40px;
+    font-size: 38px;
     margin-bottom: 10px;
     text-align: center; /* Center the title */
-    max-width: 100%;
-}
+      max-width: 100%;}
 .blog-post-meta {
     font-size: 14px;
     color: #999;
     text-align: center; /* Center the meta information */
-    margin-bottom: 20px; /* Add margin for spacing */
+    margin-bottom: 30px; /* Add margin for spacing */
+    padding-bottom: 20px;
 }
 
 .blog-post p {
@@ -1270,3 +1270,28 @@ footer {
 ul {
     padding-left: 130px;
 }
+
+.blog-post h2.blog-subheading {
+    padding-left: 110px;
+    font-size: 28px; /* Default font size */
+}
+
+/* For tablets and larger devices */
+@media (max-width: 768px) {
+    .blog-post h2.blog-subheading {
+        padding-left: 50px;
+        font-size: 20px;
+        font-weight: bold;
+    }
+}
+
+/* For mobile devices */
+@media (max-width: 480px) {
+    .blog-post h2.blog-subheading {
+        padding-left: 20px;
+        font-size: 18px;
+        font-weight: bold;
+
+    }
+}
+

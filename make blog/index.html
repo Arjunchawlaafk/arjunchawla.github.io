@@ -171,6 +171,8 @@
                     <button type="button" onclick="openLinkPopup(this)">Link</button>
                     <button type="button" onclick="addList(this, 'ul')">Bullet Points</button>
                     <button type="button" onclick="addList(this, 'ol')">Numbered List</button>
+                    <button type="button" onclick="insertHorizontalLine(this)">Insert Line</button>
+                    <button type="button" onclick="insertLineSpace(this)">Insert Line Space</button>
                 </div>
                 <textarea class="paragraph" placeholder="Enter paragraph content"></textarea>
                 <button class="btn delete-btn" onclick="deleteElement(this)">Delete</button>
@@ -233,6 +235,26 @@
             textarea.value = textarea.value.substring(0, start) + list + textarea.value.substring(end);
         }
 
+        function insertHorizontalLine(button) {
+            const textarea = button.parentElement.nextElementSibling;
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            const selectedText = textarea.value.substring(start, end);
+            const textWithLine = `${selectedText}<hr>`;
+
+            textarea.value = textarea.value.substring(0, start) + textWithLine + textarea.value.substring(end);
+        }
+
+        function insertLineSpace(button) {
+            const textarea = button.parentElement.nextElementSibling;
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            const selectedText = textarea.value.substring(start, end);
+            const textWithLineSpace = `${selectedText}<br>`;
+
+            textarea.value = textarea.value.substring(0, start) + textWithLineSpace + textarea.value.substring(end);
+        }
+
         function addImage() {
             const container = document.getElementById('dynamic-inputs');
             const div = document.createElement('div');
@@ -270,45 +292,32 @@
             div.remove();
         }
 
+        function generateBlog() {
+    const title = document.getElementById('title').value;
+    const author = document.getElementById('author').value;
+    const date = document.getElementById('date').value;
+    const dynamicInputs = document.getElementById('dynamic-inputs').children;
 
-    function generateBlog() {
-        const title = document.getElementById('title').value;
-        const author = document.getElementById('author').value;
-        const date = document.getElementById('date').value;
-        const dynamicInputs = document.getElementById('dynamic-inputs').children;
+    let blogContent = '';
 
-        let elements = [];
-
-        for (let i = 0; i < dynamicInputs.length; i++) {
-            const element = dynamicInputs[i];
-            if (element.querySelector('.paragraph')) {
-                elements.push({ type: 'paragraph', content: element.querySelector('.paragraph').value, index: i });
-            } else if (element.querySelector('.image-url')) {
-                elements.push({ type: 'image', url: element.querySelector('.image-url').value, caption: element.querySelector('.image-caption').value, index: i });
-            } else if (element.querySelector('.sub-heading')) {
-                elements.push({ type: 'sub-heading', content: element.querySelector('.sub-heading').value, index: i });
-            }
+    for (let i = 0; i < dynamicInputs.length; i++) {
+        const element = dynamicInputs[i];
+        if (element.querySelector('.paragraph')) {
+            blogContent += `<p>${element.querySelector('.paragraph').value}</p><br>`;
+        } else if (element.querySelector('.image-url')) {
+            const imageUrl = element.querySelector('.image-url').value;
+            const imageCaption = element.querySelector('.image-caption').value;
+            blogContent += `
+                <img src="${imageUrl}" alt="Image" class="blog-image">
+                <div class="caption">${imageCaption}</div>
+                <br>&nbsp;
+            `;
+        } else if (element.querySelector('.sub-heading')) {
+            blogContent += `<h2 class="blog-subheading">${element.querySelector('.sub-heading').value}</h2><br>`;
         }
+    }
 
-        elements.sort((a, b) => a.index - b.index);
-
-        let blogContent = '';
-
-        elements.forEach(element => {
-            if (element.type === 'paragraph') {
-                blogContent += `<p>${element.content}</p><br>`;
-            } else if (element.type === 'image') {
-                blogContent += `
-                    <img src="${element.url}" alt="Image" class="blog-image">
-                    <div class="caption">${element.caption}</div>
-                    <br>&nbsp;
-                `;
-            } else if (element.type === 'sub-heading') {
-                blogContent += `<h2 class="blog-subheading">${element.content}</h2><br>`;
-            }
-        });
-
-        const blogHtml = `
+    const blogHtml = `
 <div class="container">
     <div class="go-back">
     </div>
@@ -318,14 +327,14 @@
         ${blogContent}
     </div>
 </div>
-        `;
+    `;
 
-        const blob = new Blob([blogHtml], { type: 'text/html' });
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = `${title.replace(/\s+/g, '_').toLowerCase()}.html`;
-        link.click();
-    }
+    const blob = new Blob([blogHtml], { type: 'text/html' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `${title.replace(/\s+/g, '_').toLowerCase()}.html`;
+    link.click();
+}
 
         function formatCaptionText(button, format) {
             const input = button.parentElement.nextElementSibling;
