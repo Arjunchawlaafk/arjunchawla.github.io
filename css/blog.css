@@ -1141,3 +1141,24 @@ fieldset {
   .blog-post-image-3 {
     width: 90%;
 }
+
+.blog-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+  }
+  
+  .blog-post {
+    box-sizing: border-box;
+    padding: 20px;
+  }
+  
+  .blog-post img {
+    width: 100%;
+    height: auto;
+  }
+
+.latest-posts-heading{
+    padding-bottom: 30px;
+    padding-top: 10px;
+}

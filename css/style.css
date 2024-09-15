@@ -1261,5 +1261,15 @@ fieldset {
   }
 
 .blog-post-image-3 {
-    width: 90%;
+    width: 100%;
+}
+
+.blog-post-image-4 {
+    width: 75%;
+
+}
+
+.blog-post-image-2 {
+    width: 80%;
+
 }
