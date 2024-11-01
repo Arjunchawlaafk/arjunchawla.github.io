@@ -1278,3 +1278,12 @@ fieldset {
     width: 90%;
 
 }
+
+.styled-quote {
+    font-style: italic;
+    color: #333;
+    border-left: 4px solid #ccc;
+    padding-left: 20px;
+    margin: 20px 0;
+    line-height: 1.6;
+    font-size: 1.1em;}
