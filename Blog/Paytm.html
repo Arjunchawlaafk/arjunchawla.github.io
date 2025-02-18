@@ -88,39 +88,162 @@
               
 
   &nbsp;
- <!-- Footer -->
- <div class="section full-page" id="contact">
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-content">
-        <div class="col-md-12">
-          <h1 class="size-50">Contact Me</h1>
-          <div class="h-50"></div>
-        </div>
-        <div class="col-md-4" data-aos="fade-up">
-          <h3>Email</h3>
-          <p>arjunchawla42@gmail.com</p>
-          <h3>Social Network</h3>
-          <ul class="social">
-            <li>
-              <a href="https://www.linkedin.com/in/1andonlyarjun" target="_blank"><i class="ion-social-linkedin"></i></a>
-            </li>
-          </ul>
+  <footer>
+    <div class="section full-page" id="contact">
+      <div class="container">
+        <div class="footer-content">
+          <div class="col-md-12">
+            <h4>05</h4>
+            <h1 class="size-50">Contact Me</h1>
+            <div class="h-50"></div>
+          </div>
+          <div class="col-md-4" data-aos="fade-up">
+            <h3>Email</h3>
+            <p>arjunchawla42@gmail.com</p>
+  
+            <h3>Social Network</h3>
+  
+            <ul class="social">
+              <li>
+                <a href="https://www.linkedin.com/in/1andonlyarjun/" target="_blank"><i class="ion-social-linkedin"></i></a>
+              </li>
+              <li>
+                <a href="https://github.com/Arjunchawlaafk"><i class="ion-social-github" id="github-icon-footer"></i></a>
+              </li>
+            </ul>
+            <div class="clearfix"></div>
+            <div class="h-50"></div>
+          </div>
+          <div class="col-md-8" data-aos="fade-up">
+            <form id="contact-form" name="contact" method="post">
+              <input type="text" name="name" class="form-control" placeholder="Your Name" required />
+              <input type="email" name="email" class="form-control" placeholder="Your E-mail" required />
+              <input type="text" name="phone" class="form-control" placeholder="Phone Number" required />
+              <textarea name="message" class="form-control" placeholder="Your Message" style="height: 120px" required></textarea>
+              <button id="submit" type="submit" name="submit" class="btn btn-glance">
+                Send
+              </button>
+              <div id="success" style="display: none;">
+                <p class="green textcenter">
+                  Your message was sent successfully! I will be in touch as soon as I can.
+                </p>
+              </div>
+              <div id="error" style="display: none;">
+                <p>
+                  Something went wrong, try refreshing and submitting the form again.
+                </p>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
   </footer>
-  <!-- ./Footer -->
-    <script>
-        document.addEventListener('scroll', function() {
-            const header = document.querySelector('header');
-            if (window.scrollY > 100) {
-                header.classList.add('hidden');
-            } else {
-                header.classList.remove('hidden');
-            }
+  
+  <script>
+    document.getElementById('contact-form').addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent the form from submitting the traditional way
+      
+      // Get form values
+      const name = event.target.name.value;
+      const email = event.target.email.value;
+      const phone = event.target.phone.value;
+      const message = event.target.message.value;
+  
+      // Create the message payload
+      const payload = {
+        content: `New contact form submission:`,
+        embeds: [
+          {
+            title: `Message from ${name}`,
+            description: `Here are the details from the form submission:`,
+            color: 3447003, // Light blue color for the embed
+            fields: [
+              { name: 'Email', value: email, inline: true },
+              { name: 'Phone', value: phone, inline: true },
+              { name: 'Message', value: message, inline: false },
+            ],
+            footer: {
+              text: 'Contact Form Submission',
+            },
+            timestamp: new Date().toISOString(),
+          },
+        ],
+      };
+  
+      // Send the data to Discord webhook
+      fetch('https://discord.com/api/webhooks/1341410476818698242/KOJgIlMCff6VjbZLErcY5ASzcbEZmRsfWu4IWwGeJ7BvBZZOFvLSkLpk9bgkFR8W28y2', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      })
+        .then(response => {
+          if (response.ok) {
+            // Show success message
+            document.getElementById('success').style.display = 'block';
+            document.getElementById('error').style.display = 'none';
+  
+            // Reset form fields
+            document.getElementById('contact-form').reset();
+  
+            // Hide success message after 5 seconds
+            setTimeout(function() {
+              document.getElementById('success').style.display = 'none';
+            }, 5000);
+          } else {
+            document.getElementById('error').style.display = 'block';
+            document.getElementById('success').style.display = 'none';
+          }
+        })
+        .catch(error => {
+          document.getElementById('error').style.display = 'block';
+          document.getElementById('success').style.display = 'none';
         });
-
-    </script>
-</body>
-</html>
+    });
+  </script>
+  
+  
+  
+  </body>
+  </html>
+  
+  </body>
+  </html>
+  
+   
+  
+  
+      <!-- jQuery -->
+      <script src="js/jquery.js"></script>
+      <!--  plugins  -->
+      <script src="js/bootstrap.min.js"></script>
+      <script src="js/plugins.js"></script>
+      <script src="js/aos.js"></script>
+      <script src="js/jquery.form.js"></script>
+      <script src="js/jquery.validate.min.js"></script>
+  
+      <!--  main script  -->
+  
+      <script src="js/custom.js"></script>
+      <script>
+        $(document).ready(function() {
+          $(window).on('scroll', function() {
+            var scrollPos = $(document).scrollTop();
+            $('nav ul li a').each(function() {
+              var currLink = $(this);
+              var refElement = $(currLink.attr("href"));
+              if (refElement.position().top <= scrollPos && refElement.position().top + refElement.height() > scrollPos) {
+                $('nav ul li a').removeClass("active");
+                currLink.addClass("active");
+              } else {
+                currLink.removeClass("active");
+              }
+            });
+          });
+        });
+      </script>
+    </body>
+  </html>
+  
